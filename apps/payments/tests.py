@@ -1,6 +1,5 @@
 import pytest
-from django.utils import timezone
-from .models import Payment
+from apps.payments.models import Payment
 
 
 # Test Models
