@@ -17,8 +17,5 @@ class Payment(BaseModel):
     status = models.CharField(max_length=10, default="pending")
     paid_at = models.DateTimeField(null=True, blank=True)
 
-    # class Meta:
-    #     app_label = "payments"
-
     def __str__(self):
         return f"{self.name}"

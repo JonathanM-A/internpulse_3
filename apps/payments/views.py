@@ -39,7 +39,7 @@ class PaymentViewset(ModelViewSet):
             message = response_data["message"]
             data = response_data["data"]
 
-            if not response_data["status"]:
+            if not status:
                 return Response(
                     {
                         "error": _(
