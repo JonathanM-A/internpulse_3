@@ -1,31 +1,11 @@
 import pytest
 from apps.payments.models import Payment
 
-
-# Test Models
 @pytest.mark.django_db
 def test_payment_creation():
-    """
-    Test that a Payment instance can be created and saved to the database.
-    """
-
-    payment = Payment(name="Peter Griffin", email="bitw@familyguy.com", amount=100.50)
+    payment = Payment(name="andoh", email="test@mail.com", amount=100.00)
     payment.save()
-
     assert payment.id is not None
-    # assert payment.name == "John Doe"
-    # assert payment.email == "john@example.com"
-    # assert payment.amount == 100.50
-    # assert payment.status == "pending"
-    # assert payment.ref is None
-    # assert payment.paid_at is None
-
-
-# ```import pytest
-# from django.core.exceptions import ValidationError
-
-# # from apps.avservices.models import Service
-
 
 # @pytest.mark.django_db
 # class TestServiceModel:
