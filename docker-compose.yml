@@ -1,9 +1,21 @@
 version: '3.8'
 
 services:
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: appdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   web:
     build: .  # Uses your Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate &&
+            python manage.py collectstatic --noinput &&
+            gunicorn myproject.wsgi:application"
     volumes:
       - .:/app  # Sync local code for development
     ports:
@@ -11,5 +23,10 @@ services:
     env_file:
       - .env  # Load all variables (DB_NAME, DB_USER, etc.) from here
     environment:
-      - DB_HOST=host.docker.internal  # Critical: Connects to host's Postgres
+      - DB_HOST=db  # Changed from host.docker.internal to db
+      - DB_NAME=appdb
+      - DB_USER=user
+      - DB_PASSWORD=pass
+    depends_on:
+      - db  # Ensures db starts before web
     restart: unless-stopped
