@@ -15,9 +15,11 @@ services:
   web:
     build: .  # Uses your Dockerfile
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "mkdir -p /app/staticfiles &&
+            chmod 777 /app/staticfiles &&
+            python manage.py migrate &&
             python manage.py collectstatic --noinput &&
-            gunicorn myproject.wsgi:application"
+            gunicorn config.wsgi:application"
     volumes:
       - .:/app  # Sync local code for development
     ports:
